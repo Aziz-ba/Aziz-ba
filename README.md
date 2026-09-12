@@ -13,10 +13,10 @@
 
 ### What I do
 
-- Model data in **Snowflake** and transform it with **dbt** — clean layers, tested models, KPIs that hold up.
+- Model data in **Snowflake** and transform it with **dbt** - clean layers, tested models, KPIs that hold up.
 - Build **Power BI** reports and dashboards on top, plus **Streamlit** apps when something more custom is needed.
 - Handle the plumbing too: ingestion, ELT, CI/CD across environments, and a bit of infra (Terraform, Docker).
-- Work on the ML side — forecasting, NLP and putting models to work next to the data.
+- Work on the ML side - forecasting, NLP and putting models to work next to the data.
 - Microsoft Certified: **Azure Data Engineer Associate (DP-203)**.
 - French &amp; English.
 
@@ -46,23 +46,18 @@
 ### A few things I've built
 
 **Data & analytics engineering**
-- [**fabric-movie-analytics**](https://github.com/Aziz-ba/fabric-movie-analytics) — a Bronze/Silver/Gold lakehouse with a Power BI star schema (and a local pandas version so anyone can run it).
-- [**data-lake-project**](https://github.com/Aziz-ba/data-lake-project) — Snowflake data lake fed from cloud storage, with a Streamlit app on top (plus a local DuckDB build).
-- [**london-boroughs-dataviz**](https://github.com/Aziz-ba/london-boroughs-dataviz) — full data-viz project: scrape → clean → analyze → interactive Plotly/Streamlit dashboard.
+- [**fabric-movie-analytics**](https://github.com/Aziz-ba/fabric-movie-analytics) - a Bronze/Silver/Gold lakehouse with a Power BI star schema (and a local pandas version so anyone can run it).
+- [**data-lake-project**](https://github.com/Aziz-ba/data-lake-project) - Snowflake data lake fed from cloud storage, with a Streamlit app on top (plus a local DuckDB build).
+- [**london-boroughs-dataviz**](https://github.com/Aziz-ba/london-boroughs-dataviz) - full data-viz project: scrape, clean, analyze, then an interactive Plotly/Streamlit dashboard.
 
 **Machine learning & AI**
-- [**imdb-rating-nlp**](https://github.com/Aziz-ba/imdb-rating-nlp) — can you predict a film's rating from its plot? TF-IDF vs. sentence embeddings vs. DistilBERT (spoiler: the simple baseline is hard to beat).
-- [**socioeconomic-ml**](https://github.com/Aziz-ba/socioeconomic-ml) — predicting a socio-economic score on 100k people; a Random Forest baseline lands at R² 0.68.
-- [**movie-review-sentiment**](https://github.com/Aziz-ba/movie-review-sentiment) — scrape every review of a film, run transformer sentiment, roll it up into a reputation score.
+- [**imdb-rating-nlp**](https://github.com/Aziz-ba/imdb-rating-nlp) - can you predict a film's rating from its plot? TF-IDF vs. sentence embeddings vs. DistilBERT (spoiler: the simple baseline is hard to beat).
+- [**socioeconomic-ml**](https://github.com/Aziz-ba/socioeconomic-ml) - predicting a socio-economic score on 100k people; a Random Forest baseline lands at R² 0.68.
+- [**movie-review-sentiment**](https://github.com/Aziz-ba/movie-review-sentiment) - scrape every review of a film, run transformer sentiment, roll it up into a reputation score.
 
 **Engineering & DevOps**
-- [**rest-api-nodejs**](https://github.com/Aziz-ba/rest-api-nodejs) — a REST API done properly: JWT auth, tests, Swagger, Docker.
-- [**cicd-jenkins-docker**](https://github.com/Aziz-ba/cicd-jenkins-docker) — Jenkins → Docker → Kubernetes pipeline.
-- [**iot-sensor-telemetry**](https://github.com/Aziz-ba/iot-sensor-telemetry) — ESP32 → MQTT → InfluxDB → Grafana, runnable end to end with no hardware.
+- [**rest-api-nodejs**](https://github.com/Aziz-ba/rest-api-nodejs) - a REST API done properly: JWT auth, tests, Swagger, Docker.
+- [**cicd-jenkins-docker**](https://github.com/Aziz-ba/cicd-jenkins-docker) - Jenkins to Docker to Kubernetes pipeline.
+- [**iot-sensor-telemetry**](https://github.com/Aziz-ba/iot-sensor-telemetry) - ESP32 to MQTT to InfluxDB to Grafana, runnable end to end with no hardware.
 
----
-
-<p align="center">
-  <img height="165" src="https://github-readme-stats.vercel.app/api?username=Aziz-ba&show_icons=true&theme=react&hide_border=true&count_private=true&bg_color=0D1117&icon_color=29B5E8&title_color=29B5E8" alt="stats"/>
-  <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Aziz-ba&layout=compact&theme=react&hide_border=true&bg_color=0D1117&title_color=29B5E8" alt="top langs"/>
-</p>
+<p align="center"><i>Find me on <a href="https://www.linkedin.com/in/aziz-benayed/">LinkedIn</a> or check out my <a href="https://aziz-ba.github.io/portfolio-website/">portfolio</a>.</i></p>
