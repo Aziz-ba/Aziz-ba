@@ -77,9 +77,11 @@
 | 🎬 **[Movie Analytics — Microsoft Fabric](https://github.com/Aziz-ba/fabric-movie-analytics)** | End-to-end Lakehouse (Bronze/Silver/Gold), API enrichment and a Power BI star schema over a movie dataset | Fabric · PySpark · OMDb API · Power BI |
 | 🧊 **[Data Lake on Snowflake](https://github.com/Aziz-ba/data-lake-project)** | Cloud data lake: GCS ingestion via Snowpipe, transformations in Snowflake, and a Streamlit insights app | Snowflake · Snowpipe · GCP · Streamlit |
 | 🎥 **[IMDb Rating NLP](https://github.com/Aziz-ba/imdb-rating-nlp)** | Predicting IMDb ratings from plot text, benchmarking TF-IDF/Ridge vs. sentence embeddings vs. DistilBERT | NLP · scikit-learn · TensorFlow · PyTorch |
+| 🌡️ **[IoT Sensor Telemetry](https://github.com/Aziz-ba/iot-sensor-telemetry)** | ESP32 reads environmental sensors → MQTT → InfluxDB time-series pipeline | ESP32 · C++ · MQTT · InfluxDB |
 | ⚙️ **[Infrastructure as Code](https://github.com/Aziz-ba/infrastructure-as-code)** | Reproducible AWS two-tier web stack, provisioned and configured with code | Terraform · Ansible · AWS |
-| 🐳 **[Docker Labs](https://github.com/Aziz-ba/docker-labs)** | Progressive multi-service stack: NGINX + PHP-FPM + MySQL via Docker Compose | Docker · Compose · NGINX · MySQL |
-| 📦 **[Containerized Web App](https://github.com/Aziz-ba/Containerized-WebApp)** | Full web app packaged and shipped with Docker | PHP · Docker · JS · CSS |
+| 📈 **[R Data Analysis](https://github.com/Aziz-ba/r-data-analysis)** | Regression, classification and data visualization on real datasets | R · MASS · ggplot2 · R Markdown |
+| 🐳 **[Containerized Web App](https://github.com/Aziz-ba/Containerized-WebApp)** | Full web app packaged and shipped with Docker (NGINX + PHP-FPM + MySQL) | Docker · Compose · NGINX · MySQL |
+| 🔐 **[Cybersecurity Labs](https://github.com/Aziz-ba/cybersecurity-labs)** | Cryptanalysis and network traffic analysis labs | Python · Cryptanalysis · Wireshark |
 
 ---
 
