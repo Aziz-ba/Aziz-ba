@@ -74,10 +74,12 @@
 
 | Project | What it does | Stack |
 |---|---|---|
-| 🎬 **[Movie Analytics — Microsoft Fabric](https://github.com/Aziz-ba)** | End-to-end Lakehouse (Bronze/Silver/Gold), API enrichment and a Power BI star schema over a movie dataset | Fabric · PySpark · OMDb API · Power BI |
-| 🧊 **[Data Lake on Snowflake](https://github.com/Aziz-ba/data-lake-project)** | Cloud data lake: GCP bucket ingestion via Snowpipe, transformations in Snowflake, and a Streamlit insights app | Snowflake · Snowpipe · GCP · Streamlit |
-| 🐳 **[Containerized Web App](https://github.com/Aziz-ba/Containerized-WebApp)** | Full web app packaged and shipped with Docker | PHP · Docker · JS · CSS |
-| ⚙️ **[Infrastructure as Code](https://github.com/Aziz-ba)** | Provision & configure cloud infra reproducibly | Terraform · Ansible · AWS |
+| 🎬 **[Movie Analytics — Microsoft Fabric](https://github.com/Aziz-ba/fabric-movie-analytics)** | End-to-end Lakehouse (Bronze/Silver/Gold), API enrichment and a Power BI star schema over a movie dataset | Fabric · PySpark · OMDb API · Power BI |
+| 🧊 **[Data Lake on Snowflake](https://github.com/Aziz-ba/data-lake-project)** | Cloud data lake: GCS ingestion via Snowpipe, transformations in Snowflake, and a Streamlit insights app | Snowflake · Snowpipe · GCP · Streamlit |
+| 🎥 **[IMDb Rating NLP](https://github.com/Aziz-ba/imdb-rating-nlp)** | Predicting IMDb ratings from plot text, benchmarking TF-IDF/Ridge vs. sentence embeddings vs. DistilBERT | NLP · scikit-learn · TensorFlow · PyTorch |
+| ⚙️ **[Infrastructure as Code](https://github.com/Aziz-ba/infrastructure-as-code)** | Reproducible AWS two-tier web stack, provisioned and configured with code | Terraform · Ansible · AWS |
+| 🐳 **[Docker Labs](https://github.com/Aziz-ba/docker-labs)** | Progressive multi-service stack: NGINX + PHP-FPM + MySQL via Docker Compose | Docker · Compose · NGINX · MySQL |
+| 📦 **[Containerized Web App](https://github.com/Aziz-ba/Containerized-WebApp)** | Full web app packaged and shipped with Docker | PHP · Docker · JS · CSS |
 
 ---
 
