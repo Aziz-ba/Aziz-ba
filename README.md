@@ -12,6 +12,9 @@
   <a href="mailto:benayedaziz23@gmail.com">
     <img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/>
   </a>
+  <a href="https://aziz-ba.github.io/portfolio-website/" target="_blank">
+    <img src="https://img.shields.io/badge/Portfolio-29B5E8?style=for-the-badge&logo=githubpages&logoColor=white" alt="Portfolio"/>
+  </a>
   <img src="https://komarev.com/ghpvc/?username=Aziz-ba&label=Profile%20views&color=29B5E8&style=for-the-badge" alt="Profile views"/>
 </p>
 
@@ -81,6 +84,9 @@
 | ⚙️ **[Infrastructure as Code](https://github.com/Aziz-ba/infrastructure-as-code)** | Reproducible AWS two-tier web stack, provisioned and configured with code | Terraform · Ansible · AWS |
 | 📈 **[R Data Analysis](https://github.com/Aziz-ba/r-data-analysis)** | Regression, classification and data visualization on real datasets | R · MASS · ggplot2 · R Markdown |
 | 🐳 **[Containerized Web App](https://github.com/Aziz-ba/Containerized-WebApp)** | Full web app packaged and shipped with Docker (NGINX + PHP-FPM + MySQL) | Docker · Compose · NGINX · MySQL |
+| 🔌 **[REST API — Node.js](https://github.com/Aziz-ba/rest-api-nodejs)** | CRUD API for users & posts (Express + Sequelize), runs on SQLite out of the box | Node.js · Express · Sequelize |
+| 🕷️ **[web-scraper-js](https://github.com/Aziz-ba/web-scraper-js)** | Reusable, content-type-aware Node scraper with a working Wikipedia example | Node.js · fetch · jsdom |
+| 🌐 **[Portfolio Website](https://aziz-ba.github.io/portfolio-website/)** | This site's source — responsive portfolio, live on GitHub Pages | HTML · CSS · GitHub Pages |
 | 🔐 **[Cybersecurity Labs](https://github.com/Aziz-ba/cybersecurity-labs)** | Cryptanalysis and network traffic analysis labs | Python · Cryptanalysis · Wireshark |
 
 ---
