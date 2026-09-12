@@ -75,19 +75,37 @@
 
 ## 📌 Featured Projects
 
+### 🧠 Data Engineering & AI
 | Project | What it does | Stack |
 |---|---|---|
-| 🎬 **[Movie Analytics — Microsoft Fabric](https://github.com/Aziz-ba/fabric-movie-analytics)** | End-to-end Lakehouse (Bronze/Silver/Gold), API enrichment and a Power BI star schema over a movie dataset | Fabric · PySpark · OMDb API · Power BI |
-| 🧊 **[Data Lake on Snowflake](https://github.com/Aziz-ba/data-lake-project)** | Cloud data lake: GCS ingestion via Snowpipe, transformations in Snowflake, and a Streamlit insights app | Snowflake · Snowpipe · GCP · Streamlit |
-| 🎥 **[IMDb Rating NLP](https://github.com/Aziz-ba/imdb-rating-nlp)** | Predicting IMDb ratings from plot text, benchmarking TF-IDF/Ridge vs. sentence embeddings vs. DistilBERT | NLP · scikit-learn · TensorFlow · PyTorch |
-| 🌡️ **[IoT Sensor Telemetry](https://github.com/Aziz-ba/iot-sensor-telemetry)** | ESP32 reads environmental sensors → MQTT → InfluxDB time-series pipeline | ESP32 · C++ · MQTT · InfluxDB |
-| ⚙️ **[Infrastructure as Code](https://github.com/Aziz-ba/infrastructure-as-code)** | Reproducible AWS two-tier web stack, provisioned and configured with code | Terraform · Ansible · AWS |
-| 📈 **[R Data Analysis](https://github.com/Aziz-ba/r-data-analysis)** | Regression, classification and data visualization on real datasets | R · MASS · ggplot2 · R Markdown |
-| 🐳 **[Containerized Web App](https://github.com/Aziz-ba/Containerized-WebApp)** | Full web app packaged and shipped with Docker (NGINX + PHP-FPM + MySQL) | Docker · Compose · NGINX · MySQL |
-| 🔌 **[REST API — Node.js](https://github.com/Aziz-ba/rest-api-nodejs)** | CRUD API for users & posts (Express + Sequelize), runs on SQLite out of the box | Node.js · Express · Sequelize |
-| 🕷️ **[web-scraper-js](https://github.com/Aziz-ba/web-scraper-js)** | Reusable, content-type-aware Node scraper with a working Wikipedia example | Node.js · fetch · jsdom |
-| 🌐 **[Portfolio Website](https://aziz-ba.github.io/portfolio-website/)** | This site's source — responsive portfolio, live on GitHub Pages | HTML · CSS · GitHub Pages |
-| 🔐 **[Cybersecurity Labs](https://github.com/Aziz-ba/cybersecurity-labs)** | Cryptanalysis and network traffic analysis labs | Python · Cryptanalysis · Wireshark |
+| 🎬 **[Movie Analytics — Microsoft Fabric](https://github.com/Aziz-ba/fabric-movie-analytics)** | End-to-end Medallion Lakehouse + Power BI star schema (with a local pandas repro & insights) | Fabric · PySpark · Power BI |
+| 🧊 **[Data Lake on Snowflake](https://github.com/Aziz-ba/data-lake-project)** | GCS → Snowpipe → Snowflake + Streamlit (plus a local DuckDB version) | Snowflake · GCP · Streamlit |
+| 🎥 **[IMDb Rating NLP](https://github.com/Aziz-ba/imdb-rating-nlp)** | Benchmarking TF-IDF/Ridge vs. sentence embeddings vs. DistilBERT | NLP · scikit-learn · PyTorch |
+| 🧑‍💼 **[Socio-economic ML](https://github.com/Aziz-ba/socioeconomic-ml)** | Multi-model prediction on 100k people across joined datasets | scikit-learn · pandas |
+| 🎭 **[Movie Review Sentiment](https://github.com/Aziz-ba/movie-review-sentiment)** | Scrape all IMDb reviews (Selenium) + transformer sentiment | Selenium · 🤗 Transformers |
+
+### 📊 Data Analysis & Visualization
+| Project | What it does | Stack |
+|---|---|---|
+| 🦠 **[COVID Mortality Analysis](https://github.com/Aziz-ba/covid-mortality-analysis)** | What drives COVID mortality — smoking vs. age (age wins) | pandas · plotly · folium |
+| 🎮 **[LoL Champion Analysis](https://github.com/Aziz-ba/lol-champion-analysis)** | League of Legends meta EDA: archetypes, roles, pick/win tiers | pandas · plotly · seaborn |
+| 📈 **[R Data Analysis](https://github.com/Aziz-ba/r-data-analysis)** | Regression, classification & football analytics in R | R · ggplot2 · R Markdown |
+
+### ⚙️ Backend & DevOps
+| Project | What it does | Stack |
+|---|---|---|
+| 🔌 **[REST API — Node.js](https://github.com/Aziz-ba/rest-api-nodejs)** | Production-style API: JWT, bcrypt, relations, tests, Swagger, Docker | Express · Sequelize · JWT |
+| 🚀 **[CI/CD Pipeline](https://github.com/Aziz-ba/cicd-jenkins-docker)** | Jenkins → Docker → Kubernetes for a Node.js app | Jenkins · Docker · K8s |
+| ⚙️ **[Infrastructure as Code](https://github.com/Aziz-ba/infrastructure-as-code)** | Reproducible AWS stack (Terraform for_each + Ansible + CI) | Terraform · Ansible · AWS |
+| 🌡️ **[IoT Sensor Telemetry](https://github.com/Aziz-ba/iot-sensor-telemetry)** | ESP32 → MQTT → InfluxDB → Grafana, full Docker stack (no hardware needed) | ESP32 · MQTT · InfluxDB |
+
+### 🌐 Web, Mobile & Security
+| Project | What it does | Stack |
+|---|---|---|
+| 🌐 **[Portfolio Website](https://aziz-ba.github.io/portfolio-website/)** | This responsive portfolio, live on GitHub Pages | HTML · CSS · Pages |
+| 🥗 **[Product Comparator (Android)](https://github.com/Aziz-ba/product-comparator-android)** | Kotlin food-product comparator (Nutri-Score, barcodes) | Kotlin · Android |
+| 🕷️ **[web-scraper-js](https://github.com/Aziz-ba/web-scraper-js)** | Reusable Node scraper: retries, CLI, tests | Node.js · jsdom |
+| 🔐 **[Cybersecurity Labs](https://github.com/Aziz-ba/cybersecurity-labs)** | Cryptanalysis, networking & HTTP/Wireshark labs | Python · Wireshark |
 
 ---
 
