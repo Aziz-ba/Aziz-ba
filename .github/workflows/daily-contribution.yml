@@ -1,0 +1,53 @@
+name: Daily Contribution
+
+on:
+  schedule:
+    - cron: "0 7 * * *"   # 8am Paris CET (7am UTC)
+  workflow_dispatch:        # manual trigger from GitHub UI or phone
+
+jobs:
+  contribute:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Make a real daily contribution
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          TODAY=$(date +"%Y-%m-%d")
+          WEEKDAY=$(date +"%A")
+
+          # ── PHASE 1 TEST: write a real-looking daily log entry ──────────────
+          # This verifies the full pipeline (schedule → commit → push → green).
+          # Once confirmed working, this block will be replaced by the Claude
+          # API block below that makes genuine code/doc improvements.
+
+          mkdir -p daily-log
+          LOG=daily-log/log.md
+
+          if [ ! -f "$LOG" ]; then
+            echo "# Daily activity log" > "$LOG"
+            echo "" >> "$LOG"
+            echo "Tracks small daily improvements across repos." >> "$LOG"
+            echo "" >> "$LOG"
+          fi
+
+          echo "- **$TODAY ($WEEKDAY)** — pipeline test: verifying daily commit automation" >> "$LOG"
+
+          git config user.name "Aziz BENAYED"
+          git config user.email "benayedaziz23@gmail.com"
+          git add daily-log/log.md
+          git commit -m "chore: daily log $TODAY"
+          git push
+
+          # ── PHASE 2 (replace above with this once Phase 1 is confirmed) ─────
+          # pip install anthropic --quiet
+          # python3 contribute.py
+          # (contribute.py will pick a repo, call Claude API, make a real
+          #  improvement, commit and push to that repo)
