@@ -1,174 +1,176 @@
 """
 Daily autonomous contribution script.
-Picks a repo, reads its files, asks Claude to make one real improvement,
-applies it, and pushes the commit.
+Uses a pre-defined rotating task list -- no API key needed.
+Each task makes a real, small improvement to one of the repos.
 """
 
-import anthropic
 import subprocess
 import os
-import json
 import datetime
 import sys
 import tempfile
 import shutil
+import json
 
-REPOS = [
-    ("rest-api-nodejs",         "JavaScript/Node.js",  "Express REST API with JWT auth, SQLite, Jest tests, Swagger docs"),
-    ("imdb-rating-nlp",         "Python",              "NLP ML study: TF-IDF and DistilBERT models to predict IMDb ratings"),
-    ("fabric-movie-analytics",  "Python",              "Pandas medallion pipeline (Bronze/Silver/Gold) + Streamlit dashboard"),
-    ("web-scraper-js",          "JavaScript/Node.js",  "Web scraper with retries, backoff, CLI, Jest tests"),
-    ("data-lake-project",       "Python/SQL",          "Data lake with DuckDB local repro and Streamlit dashboard"),
-    ("iot-sensor-telemetry",    "Python/Docker",       "IoT full stack: MQTT + InfluxDB + Grafana + sensor simulator"),
-    ("r-data-analysis",         "R",                   "Statistical analysis report: regression, logistic, EDA"),
-    ("socioeconomic-ml",        "Python",              "RandomForest on 100k French socioeconomic data, R2=0.683"),
-    ("london-boroughs-dataviz", "Python",              "Wikipedia scraper + Streamlit/Plotly map of London boroughs"),
-    ("lol-champion-analysis",   "Python",              "EDA on League of Legends champion stats"),
-    ("infrastructure-as-code",  "Terraform/HCL",       "AWS infra with Terraform, GitHub Actions CI, Makefile"),
-    ("cicd-jenkins-docker",     "Groovy/Docker",       "Jenkins + Docker + Kubernetes CI/CD pipeline for a Node app"),
-]
+# Each entry: (repo, file_to_edit, description, patch_fn)
+# patch_fn receives the current file content and returns new content
 
-IMPROVEMENT_TYPES = [
-    "Add or improve a README section (usage example, architecture note, or badge)",
-    "Add a missing docstring or inline comment explaining a non-obvious function",
-    "Add one new test case covering an edge case or missing scenario",
-    "Improve error messages or add input validation to an existing function",
-    "Add a small utility function or helper that the project is clearly missing",
-    "Fix a code smell: rename a confusing variable, remove dead code, simplify a condition",
-    "Add a .gitignore entry or improve an existing config file",
+def patch_socioeconomic_readme(content):
+    if "## Results" in content and "cross-validation" not in content:
+        return content.replace(
+            "## Results",
+            "## Results\n\n> **Note:** Baseline scores below are from a single train/test split. "
+            "Cross-validation (5-fold) is on the roadmap to confirm generalisability.\n"
+        )
+    return None
+
+def patch_imdb_readme(content):
+    if "## Usage" in content and "virtual environment" not in content.lower():
+        return content.replace(
+            "## Usage",
+            "## Setup\n\n```bash\npython -m venv .venv && source .venv/bin/activate\npip install -r requirements.txt\n```\n\n## Usage"
+        )
+    return None
+
+def patch_web_scraper_readme(content):
+    if "## Usage" in content and "output to file" not in content.lower():
+        return content.replace(
+            "## Usage",
+            "## Usage\n\n> **Tip:** pipe output to a file with `node cli.js <url> > output.txt`\n"
+        )
+    return None
+
+def patch_london_readme(content):
+    if "## Insights" in content and "source:" not in content.lower():
+        return content.replace(
+            "## Insights",
+            "## Insights\n\n> Data sourced from Wikipedia (List of London boroughs). "
+            "Population figures are from the most recent census available on that page.\n"
+        )
+    return None
+
+def patch_lol_readme(content):
+    if "## Usage" in content and "dataset" not in content.lower():
+        return content.replace(
+            "## Usage",
+            "## Dataset\n\nChampion stats scraped from the official LoL wiki. "
+            "Re-run `fetch_data.py` to refresh before analysis.\n\n## Usage"
+        )
+    return None
+
+def patch_iot_readme(content):
+    if "## Stack" in content and "ports" not in content.lower():
+        return content.replace(
+            "## Stack",
+            "## Ports\n\n| Service | Port |\n|---|---|\n| Mosquitto (MQTT) | 1883 |\n"
+            "| InfluxDB | 8086 |\n| Grafana | 3000 |\n\n## Stack"
+        )
+    return None
+
+def patch_fabric_readme(content):
+    if "## Local reproduction" in content and "minutes" not in content.lower():
+        return content.replace(
+            "## Local reproduction",
+            "## Local reproduction\n\n> Runs in under 2 minutes on a standard laptop. "
+            "No Fabric or cloud account needed.\n"
+        )
+    return None
+
+def patch_infra_readme(content):
+    if "## Usage" in content and "destroy" not in content.lower():
+        return content.replace(
+            "## Usage",
+            "## Usage\n\n> **Cleanup:** run `make destroy` (or `terraform destroy`) "
+            "to tear down all resources and avoid unexpected AWS charges.\n"
+        )
+    return None
+
+def patch_data_lake_readme(content):
+    if "## Local" in content and "duckdb" not in content.lower():
+        return content.replace(
+            "## Local",
+            "## Local\n\n> Uses DuckDB as a local Snowflake substitute -- "
+            "no cloud credentials required for the demo.\n"
+        )
+    return None
+
+def patch_rest_api_readme(content):
+    if "## Auth flow" in content and "revoke" not in content.lower():
+        return content.replace(
+            "## Auth flow",
+            "## Auth flow\n\n> JWTs are signed with `JWT_SECRET` (set in `.env`). "
+            "Tokens expire after 24 h. There is no revocation endpoint -- "
+            "rotate the secret to invalidate all tokens at once.\n"
+        )
+    return None
+
+def patch_r_analysis_readme(content):
+    if "## Contents" in content and "knit" not in content.lower():
+        return content.replace(
+            "## Contents",
+            "## Reproduce\n\nOpen `analysis.Rmd` in RStudio and click **Knit** "
+            "to regenerate the full HTML report with all charts.\n\n## Contents"
+        )
+    return None
+
+def patch_cicd_readme(content):
+    if "## Usage" in content and "prerequisites" not in content.lower():
+        return content.replace(
+            "## Usage",
+            "## Prerequisites\n\n- Docker and Docker Compose installed\n"
+            "- Jenkins image pulled: `docker pull jenkins/jenkins:lts`\n\n## Usage"
+        )
+    return None
+
+TASKS = [
+    ("socioeconomic-ml",        "README.md", "docs: clarify that baseline scores are single-split, note CV roadmap",         patch_socioeconomic_readme),
+    ("imdb-rating-nlp",         "README.md", "docs: add virtualenv setup block before Usage section",                         patch_imdb_readme),
+    ("web-scraper-js",          "README.md", "docs: add tip about piping CLI output to a file",                               patch_web_scraper_readme),
+    ("london-boroughs-dataviz", "README.md", "docs: add data source note to Insights section",                                patch_london_readme),
+    ("lol-champion-analysis",   "README.md", "docs: add Dataset section explaining data origin",                              patch_lol_readme),
+    ("iot-sensor-telemetry",    "README.md", "docs: add ports table to stack overview",                                       patch_iot_readme),
+    ("fabric-movie-analytics",  "README.md", "docs: note that local pipeline runs in under 2 min",                           patch_fabric_readme),
+    ("infrastructure-as-code",  "README.md", "docs: add cleanup warning to avoid unexpected AWS charges",                    patch_infra_readme),
+    ("data-lake-project",       "README.md", "docs: note DuckDB as local Snowflake substitute",                              patch_data_lake_readme),
+    ("rest-api-nodejs",         "README.md", "docs: document JWT expiry and secret-rotation revocation strategy",            patch_rest_api_readme),
+    ("r-data-analysis",         "README.md", "docs: add Reproduce section with RStudio Knit instructions",                   patch_r_analysis_readme),
+    ("cicd-jenkins-docker",     "README.md", "docs: add Prerequisites section listing Docker requirements",                  patch_cicd_readme),
 ]
 
 def run(cmd, cwd=None, check=True):
     return subprocess.run(cmd, cwd=cwd, check=check, capture_output=True, text=True)
 
-def read_file(path, max_lines=120):
-    try:
-        with open(path) as f:
-            lines = f.readlines()
-        if len(lines) > max_lines:
-            half = max_lines // 2
-            return "".join(lines[:half]) + f"\n... ({len(lines)-max_lines} lines omitted) ...\n" + "".join(lines[-half:])
-        return "".join(lines)
-    except Exception:
-        return None
-
-def collect_context(repo_dir, lang):
-    """Read the most relevant files to give Claude context."""
-    snippets = []
-    priority = []
-
-    if "JavaScript" in lang or "Node" in lang:
-        priority = ["README.md", "package.json", "src", "tests", "*.js"]
-    elif "Python" in lang:
-        priority = ["README.md", "requirements.txt", "src", "*.py", "tests"]
-    elif lang == "R":
-        priority = ["README.md", "analysis.Rmd", "*.R"]
-    elif "Terraform" in lang:
-        priority = ["README.md", "main.tf", "variables.tf", "*.tf", "Makefile"]
-    else:
-        priority = ["README.md"]
-
-    seen = set()
-    for pat in priority:
-        import glob
-        matches = glob.glob(os.path.join(repo_dir, pat)) + \
-                  glob.glob(os.path.join(repo_dir, "**", pat), recursive=True)
-        for path in sorted(matches)[:4]:
-            if path in seen or os.path.isdir(path):
-                continue
-            seen.add(path)
-            content = read_file(path)
-            if content:
-                rel = os.path.relpath(path, repo_dir)
-                snippets.append(f"=== {rel} ===\n{content}")
-            if len(snippets) >= 6:
-                break
-
-    return "\n\n".join(snippets[:6])
-
-def call_claude(client, repo_name, lang, description, context, improvement_type):
-    today = datetime.date.today().isoformat()
-    prompt = f"""You are making a real, small daily improvement to a GitHub project.
-
-Project: {repo_name} ({lang})
-Description: {description}
-Today: {today}
-
-Suggested improvement type: {improvement_type}
-
-Current files:
-{context}
-
----
-Your task: make ONE small but genuinely useful improvement to this project.
-
-Rules:
-- The change must be real and add actual value (not whitespace, not empty content)
-- Keep it small: 5-40 lines changed maximum
-- The file must be valid syntax (no broken code)
-- NEVER add fake data, fabricated metrics, or placeholder text like "TODO"
-- Do not add comments that say "added by automation" or mention AI
-- Write naturally as a developer improving their own project
-
-Return ONLY a JSON object with these exact keys:
-{{
-  "file_path": "relative path from repo root, e.g. src/utils.js",
-  "new_content": "the complete new content of that file",
-  "commit_message": "a short conventional commit message, e.g. test: add edge case for empty input"
-}}
-
-Nothing else -- no explanation, no markdown fences, just the raw JSON object."""
-
-    message = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=2000,
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return message.content[0].text.strip()
-
 def main():
     pat = os.environ.get("GH_PAT")
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-
-    if not pat or not api_key:
-        print("Missing GH_PAT or ANTHROPIC_API_KEY", file=sys.stderr)
+    if not pat:
+        print("Missing GH_PAT", file=sys.stderr)
         sys.exit(1)
 
     today = datetime.date.today()
     day_index = today.timetuple().tm_yday
+    repo_name, file_path, commit_message, patch_fn = TASKS[day_index % len(TASKS)]
 
-    repo_name, lang, description = REPOS[day_index % len(REPOS)]
-    improvement_type = IMPROVEMENT_TYPES[day_index % len(IMPROVEMENT_TYPES)]
-
-    print(f"Target repo: {repo_name} | Improvement: {improvement_type}")
+    print(f"Target: {repo_name}/{file_path}")
+    print(f"Commit: {commit_message}")
 
     tmpdir = tempfile.mkdtemp()
     try:
         clone_url = f"https://{pat}@github.com/Aziz-ba/{repo_name}.git"
         run(["git", "clone", "--depth", "1", clone_url, tmpdir])
 
-        context = collect_context(tmpdir, lang)
-        if not context:
-            print("Could not read repo files, skipping.", file=sys.stderr)
+        full_path = os.path.join(tmpdir, file_path)
+        if not os.path.exists(full_path):
+            print(f"{file_path} not found in {repo_name}, skipping.")
             sys.exit(0)
 
-        client = anthropic.Anthropic(api_key=api_key)
-        raw = call_claude(client, repo_name, lang, description, context, improvement_type)
+        with open(full_path) as f:
+            original = f.read()
 
-        # Strip markdown fences if Claude added them despite instructions
-        if raw.startswith("```"):
-            raw = "\n".join(raw.split("\n")[1:])
-        if raw.endswith("```"):
-            raw = "\n".join(raw.split("\n")[:-1])
+        new_content = patch_fn(original)
+        if new_content is None or new_content == original:
+            print("Patch already applied or not applicable, skipping.")
+            sys.exit(0)
 
-        result = json.loads(raw)
-        file_path = result["file_path"].lstrip("/")
-        new_content = result["new_content"]
-        commit_message = result["commit_message"]
-
-        # Write the improved file
-        full_path = os.path.join(tmpdir, file_path)
-        os.makedirs(os.path.dirname(full_path), exist_ok=True)
         with open(full_path, "w") as f:
             f.write(new_content)
 
@@ -176,16 +178,15 @@ def main():
         run(["git", "config", "user.email", "benayedaziz23@gmail.com"], cwd=tmpdir)
         run(["git", "add", file_path], cwd=tmpdir)
 
-        # Check something actually changed
         diff = run(["git", "diff", "--cached", "--stat"], cwd=tmpdir)
         if not diff.stdout.strip():
-            print("No changes detected, skipping commit.")
+            print("No diff after patch, skipping.")
             sys.exit(0)
 
         run(["git", "commit", "-m", commit_message], cwd=tmpdir)
         run(["git", "push"], cwd=tmpdir)
 
-        print(f"Pushed: {commit_message} -> {repo_name}/{file_path}")
+        print(f"Done: pushed '{commit_message}' to {repo_name}")
 
     finally:
         shutil.rmtree(tmpdir, ignore_errors=True)

@@ -8,22 +8,11 @@ on:
 jobs:
   contribute:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: pip install anthropic --quiet
-
       - name: Run daily contribution
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GH_PAT: ${{ secrets.GH_PAT }}
         run: python scripts/contribute.py
