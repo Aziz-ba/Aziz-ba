@@ -18,10 +18,10 @@
 
 ### What I do
 
-- Model data in **Snowflake** and transform it with **dbt** — clean layers, tested models, KPIs that hold up.
+- Model data in **Snowflake** and transform it with **dbt** - clean layers, tested models, KPIs that hold up.
 - Build **Power BI** reports and dashboards, plus **Streamlit** apps when something more custom is needed.
 - Handle the full pipeline: ingestion (SAP SuccessFactors, REST APIs, SFTP), ELT, CI/CD across environments, Terraform, Docker.
-- Work on the ML side — forecasting, NLP, and putting models to work next to the data.
+- Work on the ML side - forecasting, NLP, and putting models to work next to the data.
 - Certified: **Azure Data Engineer Associate (DP-203)** · **Fabric Analytics Engineer (DP-600)**
 - Preparing: SnowPro Core · dbt Analytics Engineering
 - French (native) · English (C1) · Arabic (native) · Spanish (B1)
@@ -55,19 +55,19 @@
 ### A few things I've built
 
 **Data & analytics engineering**
-- [**fabric-movie-analytics**](https://github.com/Aziz-ba/fabric-movie-analytics) — Bronze/Silver/Gold Medallion lakehouse, PySpark, OMDb enrichment, Power BI star schema. Runs locally with pandas too.
-- [**data-lake-project**](https://github.com/Aziz-ba/data-lake-project) — Snowflake data lake fed from GCS via Snowpipe, Streamlit insights app on top. Local DuckDB build included.
-- [**london-boroughs-dataviz**](https://github.com/Aziz-ba/london-boroughs-dataviz) — scrape, clean, analyze, then an interactive Plotly/Streamlit dashboard with an OSM map.
+- [**fabric-movie-analytics**](https://github.com/Aziz-ba/fabric-movie-analytics) - Bronze/Silver/Gold Medallion lakehouse, PySpark, OMDb enrichment, Power BI star schema. Runs locally with pandas too.
+- [**data-lake-project**](https://github.com/Aziz-ba/data-lake-project) - Snowflake data lake fed from GCS via Snowpipe, Streamlit insights app on top. Local DuckDB build included.
+- [**london-boroughs-dataviz**](https://github.com/Aziz-ba/london-boroughs-dataviz) - scrape, clean, analyze, then an interactive Plotly/Streamlit dashboard with an OSM map.
 
 **Machine learning & AI**
-- [**imdb-rating-nlp**](https://github.com/Aziz-ba/imdb-rating-nlp) — predict a film's rating from its plot. TF-IDF vs. sentence embeddings vs. DistilBERT. The simple baseline is hard to beat (MAE 0.67).
-- [**socioeconomic-ml**](https://github.com/Aziz-ba/socioeconomic-ml) — Random Forest on 100k people, R² 0.68. Age and sex drive ~66% of the variance.
-- [**movie-review-sentiment**](https://github.com/Aziz-ba/movie-review-sentiment) — scrape every review of a film, run transformer sentiment, roll it up into a reputation score.
+- [**imdb-rating-nlp**](https://github.com/Aziz-ba/imdb-rating-nlp) - predict a film's rating from its plot. TF-IDF vs. sentence embeddings vs. DistilBERT. The simple baseline is hard to beat (MAE 0.67).
+- [**socioeconomic-ml**](https://github.com/Aziz-ba/socioeconomic-ml) - Random Forest on 100k people, R² 0.68. Age and sex drive ~66% of the variance.
+- [**movie-review-sentiment**](https://github.com/Aziz-ba/movie-review-sentiment) - scrape every review of a film, run transformer sentiment, roll it up into a reputation score.
 
 **Engineering & DevOps**
-- [**rest-api-nodejs**](https://github.com/Aziz-ba/rest-api-nodejs) — JWT auth, bcrypt, ownership checks, pagination, 9 Jest tests, Swagger docs, Docker. [![CI](https://github.com/Aziz-ba/rest-api-nodejs/actions/workflows/ci.yml/badge.svg)](https://github.com/Aziz-ba/rest-api-nodejs/actions/workflows/ci.yml)
-- [**infrastructure-as-code**](https://github.com/Aziz-ba/infrastructure-as-code) — AWS two-tier web stack with Terraform, GitHub Actions CI, hardened security groups.
-- [**iot-sensor-telemetry**](https://github.com/Aziz-ba/iot-sensor-telemetry) — ESP32 to MQTT to InfluxDB to Grafana, full stack runnable with no hardware.
+- [**rest-api-nodejs**](https://github.com/Aziz-ba/rest-api-nodejs) - JWT auth, bcrypt, ownership checks, pagination, 9 Jest tests, Swagger docs, Docker. [![CI](https://github.com/Aziz-ba/rest-api-nodejs/actions/workflows/ci.yml/badge.svg)](https://github.com/Aziz-ba/rest-api-nodejs/actions/workflows/ci.yml)
+- [**infrastructure-as-code**](https://github.com/Aziz-ba/infrastructure-as-code) - AWS two-tier web stack with Terraform, GitHub Actions CI, hardened security groups.
+- [**iot-sensor-telemetry**](https://github.com/Aziz-ba/iot-sensor-telemetry) - ESP32 to MQTT to InfluxDB to Grafana, full stack runnable with no hardware.
 
 ---
 
@@ -78,3 +78,34 @@
   &nbsp;·&nbsp;
   <a href="mailto:azizbenayed.pro@gmail.com">azizbenayed.pro@gmail.com</a>
 </p>
+
+---
+
+<details>
+<summary><b>Version française</b></summary>
+<br/>
+
+### Bonjour, je suis Aziz 👋
+
+Ingenieur Data & Analytics. Je transforme des donnees brutes en modeles et dashboards utiles. Principalement avec **Snowflake**, **dbt** et **Power BI**, avec une couche ML quand le probleme le demande.
+
+**Ce que je fais**
+
+- Modelisation dans **Snowflake** avec **dbt** - couches propres, modeles testes, KPIs fiables.
+- Rapports et dashboards **Power BI**, et applications **Streamlit** quand il faut quelque chose de plus personnalise.
+- Toute la chaine : ingestion (SAP SuccessFactors, API REST, SFTP), ELT, CI/CD multi-environnements, Terraform, Docker.
+- Cote ML : prevision, NLP, mise en production de modeles au plus pres de la donnee.
+- Certifie : **Azure Data Engineer Associate (DP-203)** · **Fabric Analytics Engineer (DP-600)**
+- En preparation : SnowPro Core · dbt Analytics Engineering
+- Francais (natif) · Anglais (C1) · Arabe (natif) · Espagnol (B1)
+
+**Quelques projets**
+
+- [**fabric-movie-analytics**](https://github.com/Aziz-ba/fabric-movie-analytics) - Lakehouse Medallion Bronze/Silver/Gold, PySpark, enrichissement OMDb, schema etoile Power BI.
+- [**imdb-rating-nlp**](https://github.com/Aziz-ba/imdb-rating-nlp) - Peut-on predire la note d'un film a partir de son synopsis ? TF-IDF vs. embeddings vs. DistilBERT (MAE 0.67).
+- [**socioeconomic-ml**](https://github.com/Aziz-ba/socioeconomic-ml) - Random Forest sur 100k personnes, R² 0.68.
+- [**rest-api-nodejs**](https://github.com/Aziz-ba/rest-api-nodejs) - API REST complete : auth JWT, tests Jest, Swagger, Docker.
+- [**infrastructure-as-code**](https://github.com/Aziz-ba/infrastructure-as-code) - Stack AWS avec Terraform et CI GitHub Actions.
+- [**iot-sensor-telemetry**](https://github.com/Aziz-ba/iot-sensor-telemetry) - ESP32 vers MQTT vers InfluxDB vers Grafana, sans materiel.
+
+</details>
