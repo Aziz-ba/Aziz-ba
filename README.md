@@ -16,6 +16,10 @@
 
 ---
 
+<details open>
+<summary><b>English</b></summary>
+<br/>
+
 ### What I do
 
 - Model data in **Snowflake** and transform it with **dbt** - clean layers, tested models, KPIs that hold up.
@@ -80,17 +84,13 @@
   <a href="mailto:azizbenayed.pro@gmail.com">azizbenayed.pro@gmail.com</a>
 </p>
 
----
+</details>
 
 <details>
-<summary><b>Version française</b></summary>
+<summary><b>Version francaise</b></summary>
 <br/>
 
-### Bonjour, je suis Aziz 👋
-
-Ingenieur Data & Analytics. Je transforme des donnees brutes en modeles et dashboards utiles. Principalement avec **Snowflake**, **dbt** et **Power BI**, avec une couche ML quand le probleme le demande.
-
-**Ce que je fais**
+### Ce que je fais
 
 - Modelisation dans **Snowflake** avec **dbt** - couches propres, modeles testes, KPIs fiables.
 - Rapports et dashboards **Power BI**, et applications **Streamlit** quand il faut quelque chose de plus personnalise.
@@ -100,13 +100,58 @@ Ingenieur Data & Analytics. Je transforme des donnees brutes en modeles et dashb
 - En preparation : SnowPro Core · dbt Analytics Engineering
 - Francais (natif) · Anglais (C1) · Arabe (natif) · Espagnol (B1)
 
-**Quelques projets**
+---
 
-- [**fabric-movie-analytics**](https://github.com/Aziz-ba/fabric-movie-analytics) - Lakehouse Medallion Bronze/Silver/Gold, PySpark, enrichissement OMDb, schema etoile Power BI.
-- [**imdb-rating-nlp**](https://github.com/Aziz-ba/imdb-rating-nlp) - Peut-on predire la note d'un film a partir de son synopsis ? TF-IDF vs. embeddings vs. DistilBERT (MAE 0.67).
-- [**socioeconomic-ml**](https://github.com/Aziz-ba/socioeconomic-ml) - Random Forest sur 100k personnes, R² 0.68.
-- [**rest-api-nodejs**](https://github.com/Aziz-ba/rest-api-nodejs) - API REST complete : auth JWT, tests Jest, Swagger, Docker.
-- [**infrastructure-as-code**](https://github.com/Aziz-ba/infrastructure-as-code) - Stack AWS avec Terraform et CI GitHub Actions.
-- [**iot-sensor-telemetry**](https://github.com/Aziz-ba/iot-sensor-telemetry) - ESP32 vers MQTT vers InfluxDB vers Grafana, sans materiel.
+### Stack
+
+**Au quotidien**
+&nbsp;
+![Snowflake](https://img.shields.io/badge/Snowflake-29B5E8?style=flat-square&logo=snowflake&logoColor=white)
+![dbt](https://img.shields.io/badge/dbt-FF694B?style=flat-square&logo=dbt&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=flat-square&logo=powerbi&logoColor=black)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat-square&logo=postgresql&logoColor=white)
+![GCP](https://img.shields.io/badge/GCP-4285F4?style=flat-square&logo=googlecloud&logoColor=white)
+![Airflow](https://img.shields.io/badge/Airflow-017CEE?style=flat-square&logo=apacheairflow&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
+![Azure](https://img.shields.io/badge/Azure-0078D4?style=flat-square&logo=microsoftazure&logoColor=white)
+
+**Egalement a l'aise avec**
+&nbsp;
+![Spark](https://img.shields.io/badge/Spark-E25A1C?style=flat-square&logo=apachespark&logoColor=white)
+![Kafka](https://img.shields.io/badge/Kafka-231F20?style=flat-square&logo=apachekafka&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-844FBA?style=flat-square&logo=terraform&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)
+
+---
+
+### Quelques projets
+
+**Data & analytics engineering**
+- [**fabric-movie-analytics**](https://github.com/Aziz-ba/fabric-movie-analytics) - Lakehouse Medallion Bronze/Silver/Gold, PySpark, enrichissement OMDb, schema etoile Power BI. Version pandas locale incluse.
+- [**data-lake-project**](https://github.com/Aziz-ba/data-lake-project) - Data lake Snowflake alimente depuis GCS via Snowpipe, application Streamlit. Build local DuckDB inclus.
+- [**london-boroughs-dataviz**](https://github.com/Aziz-ba/london-boroughs-dataviz) - scraping, nettoyage, analyse, puis dashboard interactif Plotly/Streamlit avec carte OSM.
+
+**Machine learning & IA**
+- [**imdb-rating-nlp**](https://github.com/Aziz-ba/imdb-rating-nlp) - Peut-on predire la note d'un film depuis son synopsis ? TF-IDF vs. embeddings vs. DistilBERT (MAE 0.67).
+- [**socioeconomic-ml**](https://github.com/Aziz-ba/socioeconomic-ml) - Random Forest sur 100k personnes, R² 0.68. Age et sexe expliquent ~66% de la variance.
+- [**movie-review-sentiment**](https://github.com/Aziz-ba/movie-review-sentiment) - scraping de critiques, analyse de sentiment par transformers, score de reputation global.
+
+**Ingenierie & DevOps**
+- [**rest-api-nodejs**](https://github.com/Aziz-ba/rest-api-nodejs) - Auth JWT, bcrypt, pagination, 9 tests Jest, Swagger, Docker. [![CI](https://github.com/Aziz-ba/rest-api-nodejs/actions/workflows/ci.yml/badge.svg)](https://github.com/Aziz-ba/rest-api-nodejs/actions/workflows/ci.yml)
+- [**infrastructure-as-code**](https://github.com/Aziz-ba/infrastructure-as-code) - Stack AWS avec Terraform, CI GitHub Actions, groupes de securite renforces.
+- [**iot-sensor-telemetry**](https://github.com/Aziz-ba/iot-sensor-telemetry) - ESP32 vers MQTT vers InfluxDB vers Grafana, stack complete sans materiel.
+
+---
+
+<p align="center">
+  <a href="https://aziz-ba.github.io/portfolio-website/"><b>aziz-ba.github.io/portfolio-website</b></a>
+  &nbsp;·&nbsp;
+  <a href="https://www.linkedin.com/in/aziz-benayed/">LinkedIn</a>
+  &nbsp;·&nbsp;
+  <a href="mailto:azizbenayed.pro@gmail.com">azizbenayed.pro@gmail.com</a>
+</p>
 
 </details>
