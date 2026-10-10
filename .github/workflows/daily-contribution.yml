@@ -22,7 +22,7 @@ jobs:
       - name: Run daily contribution
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}   # free key from console.groq.com
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}   # free key (Gemini: aistudio.google.com/apikey)
           LLM_URL: ${{ vars.LLM_URL }}               # optional: other OpenAI-compatible API
           MODELS: ${{ vars.MODELS }}
         run: python scripts/contribute.py
