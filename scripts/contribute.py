@@ -1,7 +1,7 @@
 """
 Daily contribution script.
-Picks a repo, reads its real files, asks a free model on GitHub Models
-(open-source Llama first, fallbacks after) for ONE small improvement as
+Picks a repo, reads its real files, asks a free open-source model (Groq by
+default, any OpenAI-compatible API works) for ONE small improvement as
 search/replace edits, validates it, then commits and pushes.
 
 Exits with an error when nothing could be committed, so a skipped day
@@ -21,12 +21,13 @@ import urllib.error
 import urllib.request
 
 OWNER = "Aziz-ba"
-MODELS_URL = "https://models.github.ai/inference/chat/completions"
-# Override with the MODELS env var (comma-separated). Open-source first.
+# Any OpenAI-compatible endpoint works. Default: Groq free tier (open-source models).
+# Override with LLM_URL and MODELS (comma-separated) env vars.
+DEFAULT_URL = "https://api.groq.com/openai/v1/chat/completions"
 DEFAULT_MODELS = [
-    "meta/Llama-3.3-70B-Instruct",
-    "mistral-ai/Codestral-2501",
-    "openai/gpt-4.1-mini",
+    "llama-3.3-70b-versatile",
+    "openai/gpt-oss-120b",
+    "qwen/qwen3-32b",
 ]
 MAX_ATTEMPTS = 3
 
@@ -119,16 +120,18 @@ Return ONLY this JSON, no markdown fences:
 
 
 def call_model(model, prompt, token):
+    url = os.environ.get("LLM_URL") or DEFAULT_URL
     body = json.dumps({
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.2,
         "max_tokens": 2500,
     }).encode()
-    req = urllib.request.Request(MODELS_URL, data=body, headers={
+    req = urllib.request.Request(url, data=body, headers={
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json",
         "Accept": "application/json",
+        "User-Agent": "daily-contribution-script",
     })
     try:
         with urllib.request.urlopen(req, timeout=120) as resp:
@@ -244,9 +247,9 @@ def attempt(repo_name, lang, description, improvement_type, pat, token, models):
 
 def main():
     pat = os.environ.get("GH_PAT")
-    token = os.environ.get("MODELS_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    token = os.environ.get("LLM_API_KEY")
     if not pat or not token:
-        sys.exit("Missing GH_PAT or GITHUB_TOKEN")
+        sys.exit("Missing GH_PAT or LLM_API_KEY secret")
     models = [m.strip() for m in os.environ.get("MODELS", "").split(",") if m.strip()] or DEFAULT_MODELS
 
     day = datetime.date.today().timetuple().tm_yday

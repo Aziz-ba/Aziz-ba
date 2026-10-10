@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: read
-  models: read             # free GitHub Models inference with GITHUB_TOKEN
 
 jobs:
   contribute:
@@ -23,6 +22,7 @@ jobs:
       - name: Run daily contribution
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}   # free key from console.groq.com
+          LLM_URL: ${{ vars.LLM_URL }}               # optional: other OpenAI-compatible API
           MODELS: ${{ vars.MODELS }}
         run: python scripts/contribute.py
