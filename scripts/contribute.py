@@ -17,6 +17,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import urllib.error
 import urllib.request
 
@@ -133,11 +134,18 @@ def call_model(model, prompt, token):
         "Accept": "application/json",
         "User-Agent": "daily-contribution-script",
     })
-    try:
-        with urllib.request.urlopen(req, timeout=120) as resp:
-            status, body = resp.status, resp.read().decode("utf-8", "replace")
-    except urllib.error.HTTPError as e:
-        raise ValueError(f"HTTP {e.code}: {' '.join(e.read().decode('utf-8', 'replace').split())[:400]}")
+    # Free tiers are often briefly overloaded: retry 500/503 with a pause.
+    for wait in (15, 45, None):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                status, body = resp.status, resp.read().decode("utf-8", "replace")
+            break
+        except urllib.error.HTTPError as e:
+            if e.code in (500, 502, 503) and wait:
+                print(f"  {model}: HTTP {e.code}, retrying in {wait}s")
+                time.sleep(wait)
+                continue
+            raise ValueError(f"HTTP {e.code}: {' '.join(e.read().decode('utf-8', 'replace').split())[:400]}")
     try:
         content = json.loads(body)["choices"][0]["message"]["content"]
     except (json.JSONDecodeError, KeyError, IndexError, TypeError):
@@ -158,7 +166,7 @@ def available_models(token):
     except (urllib.error.URLError, json.JSONDecodeError, KeyError, TypeError) as e:
         print(f"Could not list models ({e}), using configured list as-is")
         return None
-    skip = ("embed", "image", "tts", "audio", "live", "vision", "guard", "whisper", "veo", "imagen")
+    skip = ("embed", "image", "tts", "audio", "live", "vision", "guard", "whisper", "veo", "imagen", "omni", "preview")
     return [m for m in ids if not any(s in m.lower() for s in skip)]
 
 
@@ -172,13 +180,19 @@ def pick_models(configured, available):
 
 
 def parse_json(raw):
-    raw = raw.strip()
-    raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw)
-    start, end = raw.find("{"), raw.rfind("}")
-    try:
-        return json.loads(raw[start:end + 1])
-    except json.JSONDecodeError as e:
-        raise ValueError(f"model answer is not JSON ({e}): {raw[:300]!r}")
+    # Drop reasoning blocks some models emit, then find the object with our keys.
+    raw = re.sub(r"<(thought|think)>.*?</\1>", "", raw, flags=re.S)
+    decoder = json.JSONDecoder()
+    for i, ch in enumerate(raw):
+        if ch != "{":
+            continue
+        try:
+            obj, _ = decoder.raw_decode(raw, i)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(obj, dict) and "file_path" in obj and "edits" in obj:
+            return obj
+    raise ValueError(f"model answer has no usable JSON: {raw[:300]!r}")
 
 
 def apply_edits(repo_dir, result, allowed_files):
