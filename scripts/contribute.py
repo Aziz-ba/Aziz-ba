@@ -321,11 +321,32 @@ def commits_today(pat):
         return 0
 
 
+def pat_days_left(pat):
+    """Days until GH_PAT expires (GitHub sends this as a response header), None if it never expires."""
+    req = urllib.request.Request("https://api.github.com/user", headers={
+        "Authorization": f"Bearer {pat}", "User-Agent": "daily-contribution-script"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        raw = resp.headers.get("github-authentication-token-expiration")
+    if not raw:
+        return None
+    # Format: "2026-12-31 23:59:59 UTC"
+    expires = datetime.datetime.strptime(raw.replace(" UTC", ""), "%Y-%m-%d %H:%M:%S")
+    return (expires - datetime.datetime.utcnow()).days
+
+
 def main():
     pat = os.environ.get("GH_PAT")
     token = os.environ.get("LLM_API_KEY")
     if not pat or not token:
         sys.exit("Missing GH_PAT or LLM_API_KEY secret")
+
+    try:
+        days = pat_days_left(pat)
+    except urllib.error.HTTPError as e:
+        sys.exit(f"GH_PAT rejected by GitHub (HTTP {e.code}): it is expired or revoked, create a new one")
+    print(f"GH_PAT expires in: {'never' if days is None else f'{days} days'}")
+    # Fail the run (= email) two weeks ahead, but still contribute first.
+    pat_warning = days is not None and days < 14
 
     # Several runs are scheduled per day; only the first that succeeds commits.
     # A manual run from the Actions tab always contributes.
@@ -333,6 +354,8 @@ def main():
         done = commits_today(pat)
         if done:
             summary(f"Already {done} commit(s) today, nothing to do.")
+            if pat_warning:
+                sys.exit(f"GH_PAT expires in {days} days: renew it and run `gh secret set GH_PAT`")
             return
     models = [m.strip() for m in os.environ.get("MODELS", "").split(",") if m.strip()] or DEFAULT_MODELS
     models = pick_models(models, available_models(token))
@@ -351,6 +374,8 @@ def main():
         print(f"Attempt {i + 1}: {repo_name} | {improvement_type}")
         try:
             if attempt(repo_name, lang, description, improvement_type, pat, token, models):
+                if pat_warning:
+                    sys.exit(f"Contributed, but GH_PAT expires in {days} days: renew it and run `gh secret set GH_PAT`")
                 return
         except Exception as e:
             print(f"  failed: {e}")
