@@ -137,7 +137,7 @@ def call_model(model, prompt, token):
         with urllib.request.urlopen(req, timeout=120) as resp:
             status, body = resp.status, resp.read().decode("utf-8", "replace")
     except urllib.error.HTTPError as e:
-        raise ValueError(f"HTTP {e.code}: {e.read().decode('utf-8', 'replace')[:300]}")
+        raise ValueError(f"HTTP {e.code}: {' '.join(e.read().decode('utf-8', 'replace').split())[:400]}")
     try:
         content = json.loads(body)["choices"][0]["message"]["content"]
     except (json.JSONDecodeError, KeyError, IndexError, TypeError):
@@ -145,6 +145,30 @@ def call_model(model, prompt, token):
     if not content:
         raise ValueError(f"model returned empty content: {body[:300]!r}")
     return content
+
+
+def available_models(token):
+    """Ask the provider which chat models exist, so retired names don't break the run."""
+    url = (os.environ.get("LLM_URL") or DEFAULT_URL).rsplit("/chat/completions", 1)[0] + "/models"
+    req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}",
+                                               "User-Agent": "daily-contribution-script"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            ids = [m["id"].removeprefix("models/") for m in json.load(resp).get("data", [])]
+    except (urllib.error.URLError, json.JSONDecodeError, KeyError, TypeError) as e:
+        print(f"Could not list models ({e}), using configured list as-is")
+        return None
+    skip = ("embed", "image", "tts", "audio", "live", "vision", "guard", "whisper", "veo", "imagen")
+    return [m for m in ids if not any(s in m.lower() for s in skip)]
+
+
+def pick_models(configured, available):
+    if available is None:
+        return configured
+    chosen = [m for m in configured if m in available]
+    # Fallbacks: newest fast models first, then anything else that can chat.
+    extra = sorted((m for m in available if "flash" in m and "lite" not in m and m not in chosen), reverse=True)
+    return (chosen + extra)[:4] or available[:4]
 
 
 def parse_json(raw):
@@ -251,6 +275,8 @@ def main():
     if not pat or not token:
         sys.exit("Missing GH_PAT or LLM_API_KEY secret")
     models = [m.strip() for m in os.environ.get("MODELS", "").split(",") if m.strip()] or DEFAULT_MODELS
+    models = pick_models(models, available_models(token))
+    print(f"Models: {', '.join(models)}")
 
     day = datetime.date.today().timetuple().tm_yday
     for i in range(MAX_ATTEMPTS):
