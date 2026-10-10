@@ -287,6 +287,10 @@ def attempt(repo_name, lang, description, improvement_type, pat, token, models):
         msg = result["commit_message"].strip().splitlines()[0][:72]
         run(["git", "commit", "-m", msg], cwd=tmpdir)
         diff = run(["git", "show", "--stat", "--format=", "HEAD"], cwd=tmpdir).stdout
+        if os.environ.get("DRY_RUN") == "true":
+            full = run(["git", "show", "--format=", "HEAD"], cwd=tmpdir).stdout
+            summary(f"DRY RUN, not pushed: `{msg}` to **{repo_name}/{rel}** using `{model}`\n```diff\n{full}```")
+            return True
         run(["git", "push"], cwd=tmpdir)
         summary(f"Pushed `{msg}` to **{repo_name}/{rel}** using `{model}`\n```\n{diff}```")
         return True
@@ -331,6 +335,10 @@ def main():
     now = datetime.datetime.now(datetime.timezone.utc)
     # Later retries in the same day start on different repos.
     start = now.timetuple().tm_yday + (now.hour // 4) * MAX_ATTEMPTS
+    # Manual runs can target one repo (REPO input), e.g. to test it.
+    pinned = os.environ.get("REPO")
+    if pinned:
+        start = next(i for i, r in enumerate(REPOS) if r[0] == pinned)
     for i in range(MAX_ATTEMPTS):
         repo_name, lang, description = REPOS[(start + i) % len(REPOS)]
         improvement_type = IMPROVEMENT_TYPES[(start + i) % len(IMPROVEMENT_TYPES)]

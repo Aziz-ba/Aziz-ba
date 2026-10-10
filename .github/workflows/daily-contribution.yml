@@ -10,6 +10,15 @@ on:
     - cron: "0 19 * * *"   # 9pm
     - cron: "30 21 * * *"  # 11:30pm, last chance before midnight UTC
   workflow_dispatch:        # manual trigger from GitHub UI or phone
+    inputs:
+      dry_run:
+        description: "Test only: show the change, do not push"
+        type: boolean
+        default: false
+      repo:
+        description: "Optional: start with this repo (e.g. infrastructure-as-code)"
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -35,4 +44,6 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}   # free key (Gemini: aistudio.google.com/apikey)
           LLM_URL: ${{ vars.LLM_URL }}               # optional: other OpenAI-compatible API
           MODELS: ${{ vars.MODELS }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          REPO: ${{ inputs.repo }}
         run: python scripts/contribute.py
