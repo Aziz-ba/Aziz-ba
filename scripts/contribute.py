@@ -130,15 +130,28 @@ def call_model(model, prompt, token):
         "Content-Type": "application/json",
         "Accept": "application/json",
     })
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        return json.load(resp)["choices"][0]["message"]["content"]
+    try:
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            status, body = resp.status, resp.read().decode("utf-8", "replace")
+    except urllib.error.HTTPError as e:
+        raise ValueError(f"HTTP {e.code}: {e.read().decode('utf-8', 'replace')[:300]}")
+    try:
+        content = json.loads(body)["choices"][0]["message"]["content"]
+    except (json.JSONDecodeError, KeyError, IndexError, TypeError):
+        raise ValueError(f"API reply not usable (HTTP {status}): {body[:300]!r}")
+    if not content:
+        raise ValueError(f"model returned empty content: {body[:300]!r}")
+    return content
 
 
 def parse_json(raw):
     raw = raw.strip()
     raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw)
     start, end = raw.find("{"), raw.rfind("}")
-    return json.loads(raw[start:end + 1])
+    try:
+        return json.loads(raw[start:end + 1])
+    except json.JSONDecodeError as e:
+        raise ValueError(f"model answer is not JSON ({e}): {raw[:300]!r}")
 
 
 def apply_edits(repo_dir, result, allowed_files):
