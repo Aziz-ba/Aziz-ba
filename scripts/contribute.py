@@ -122,25 +122,31 @@ Return ONLY this JSON, no markdown fences:
 
 def call_model(model, prompt, token):
     url = os.environ.get("LLM_URL") or DEFAULT_URL
-    body = json.dumps({
+    payload = {
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.2,
-        "max_tokens": 2500,
-    }).encode()
-    req = urllib.request.Request(url, data=body, headers={
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "User-Agent": "daily-contribution-script",
-    })
+        "max_tokens": 4000,
+        # Ask for a bare JSON answer; dropped below if the model rejects it.
+        "response_format": {"type": "json_object"},
+    }
     # Free tiers are often briefly overloaded: retry 500/503 with a pause.
     for wait in (15, 45, None):
+        req = urllib.request.Request(url, data=json.dumps(payload).encode(), headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": "daily-contribution-script",
+        })
         try:
             with urllib.request.urlopen(req, timeout=120) as resp:
                 status, body = resp.status, resp.read().decode("utf-8", "replace")
             break
         except urllib.error.HTTPError as e:
+            if e.code == 400 and "response_format" in payload:
+                payload.pop("response_format")
+                print(f"  {model}: no JSON mode, retrying without it")
+                continue
             if e.code in (500, 502, 503) and wait:
                 print(f"  {model}: HTTP {e.code}, retrying in {wait}s")
                 time.sleep(wait)
