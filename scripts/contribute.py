@@ -232,6 +232,17 @@ def validate(repo_dir, rel):
             run(["npm", "test"], cwd=repo_dir)
     elif rel.endswith(".json"):
         json.load(open(full))
+    elif rel.endswith(".tf") and shutil.which("terraform"):
+        # Same checks as the repo's own CI: auto-format, then fmt -check and validate.
+        run(["terraform", "fmt", rel], cwd=repo_dir)
+        run(["terraform", "fmt", "-check", "-recursive"], cwd=repo_dir)
+        run(["terraform", "init", "-backend=false", "-input=false"], cwd=repo_dir)
+        run(["terraform", "validate"], cwd=repo_dir)
+        shutil.rmtree(os.path.join(repo_dir, ".terraform"), ignore_errors=True)
+        lock = os.path.join(repo_dir, ".terraform.lock.hcl")
+        if run(["git", "ls-files", "--error-unmatch", ".terraform.lock.hcl"], cwd=repo_dir, check=False).returncode:
+            if os.path.exists(lock):
+                os.remove(lock)
 
 
 def summary(line):
