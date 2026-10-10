@@ -1,8 +1,14 @@
 name: Daily Contribution
 
 on:
+  # Several tries per day (UTC). Each run exits early if a commit already
+  # exists today, so only the first successful one contributes.
   schedule:
-    - cron: "0 7 * * *"   # 8am Paris CET / 9am CEST
+    - cron: "0 7 * * *"    # 9am Paris (CEST)
+    - cron: "0 11 * * *"   # 1pm
+    - cron: "0 15 * * *"   # 5pm
+    - cron: "0 19 * * *"   # 9pm
+    - cron: "30 21 * * *"  # 11:30pm, last chance before midnight UTC
   workflow_dispatch:        # manual trigger from GitHub UI or phone
 
 permissions:

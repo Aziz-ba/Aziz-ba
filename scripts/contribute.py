@@ -283,19 +283,46 @@ def attempt(repo_name, lang, description, improvement_type, pat, token, models):
         shutil.rmtree(tmpdir, ignore_errors=True)
 
 
+def commits_today(pat):
+    """Count Aziz's commits today (UTC) on default branches, i.e. what the graph shows."""
+    today = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
+    url = f"https://api.github.com/search/commits?q=author:{OWNER}+committer-date:{today}&per_page=1"
+    req = urllib.request.Request(url, headers={
+        "Authorization": f"Bearer {pat}",
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "daily-contribution-script",
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return json.load(resp).get("total_count", 0)
+    except (urllib.error.URLError, json.JSONDecodeError) as e:
+        print(f"Could not check today's commits ({e}), contributing anyway")
+        return 0
+
+
 def main():
     pat = os.environ.get("GH_PAT")
     token = os.environ.get("LLM_API_KEY")
     if not pat or not token:
         sys.exit("Missing GH_PAT or LLM_API_KEY secret")
+
+    # Several runs are scheduled per day; only the first that succeeds commits.
+    # A manual run from the Actions tab always contributes.
+    if os.environ.get("GITHUB_EVENT_NAME") == "schedule":
+        done = commits_today(pat)
+        if done:
+            summary(f"Already {done} commit(s) today, nothing to do.")
+            return
     models = [m.strip() for m in os.environ.get("MODELS", "").split(",") if m.strip()] or DEFAULT_MODELS
     models = pick_models(models, available_models(token))
     print(f"Models: {', '.join(models)}")
 
-    day = datetime.date.today().timetuple().tm_yday
+    now = datetime.datetime.now(datetime.timezone.utc)
+    # Later retries in the same day start on different repos.
+    start = now.timetuple().tm_yday + (now.hour // 4) * MAX_ATTEMPTS
     for i in range(MAX_ATTEMPTS):
-        repo_name, lang, description = REPOS[(day + i) % len(REPOS)]
-        improvement_type = IMPROVEMENT_TYPES[(day + i) % len(IMPROVEMENT_TYPES)]
+        repo_name, lang, description = REPOS[(start + i) % len(REPOS)]
+        improvement_type = IMPROVEMENT_TYPES[(start + i) % len(IMPROVEMENT_TYPES)]
         print(f"Attempt {i + 1}: {repo_name} | {improvement_type}")
         try:
             if attempt(repo_name, lang, description, improvement_type, pat, token, models):
