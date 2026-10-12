@@ -1,6 +1,6 @@
 <h1 align="center">Hey, I'm Aziz 👋</h1>
 <h3 align="center">Data &amp; Analytics Engineer · AI</h3>
-<p align="center">I turn messy data into models and dashboards people actually use.<br/>Mostly <b>Snowflake</b>, <b>dbt</b> and <b>Power BI</b>, with machine learning where it helps.</p>
+<p align="center">I turn messy data into models and dashboards people actually use.<br/>Mostly <b>Snowflake</b>, <b>dbt</b> and <b>Power BI</b>, with ML & AI where it helps.</p>
 
 <p align="center">
   <a href="https://aziz-ba.github.io/portfolio-website/" target="_blank">
