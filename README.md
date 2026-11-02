@@ -3,7 +3,7 @@
 <p align="center">I turn messy data into models and dashboards people actually use.<br/>Mostly <b>Snowflake</b>, <b>dbt</b> and <b>Power BI</b>, with <b>ML</b> & <b>AI</b> where it helps.</p>
 
 <p align="center">
-  <a href="https://aziz-ba.github.io/portfolio-website/" target="_blank">
+  <a href="https://aziz-ba.github.io/cv/" target="_blank">
     <img src="https://img.shields.io/badge/🌐%20Portfolio-aziz--ba.github.io-29B5E8?style=for-the-badge" alt="Portfolio"/>
   </a>
 </p>
@@ -77,7 +77,7 @@
 ---
 
 <p align="center">
-  <a href="https://aziz-ba.github.io/portfolio-website/"><b>aziz-ba.github.io/portfolio-website</b></a>
+  <a href="https://aziz-ba.github.io/cv/"><b>aziz-ba.github.io/cv</b></a>
   &nbsp;·&nbsp;
   <a href="https://www.linkedin.com/in/aziz-benayed/">LinkedIn</a>
   &nbsp;·&nbsp;
@@ -147,7 +147,7 @@
 ---
 
 <p align="center">
-  <a href="https://aziz-ba.github.io/portfolio-website/"><b>aziz-ba.github.io/portfolio-website</b></a>
+  <a href="https://aziz-ba.github.io/cv/"><b>aziz-ba.github.io/cv</b></a>
   &nbsp;·&nbsp;
   <a href="https://www.linkedin.com/in/aziz-benayed/">LinkedIn</a>
   &nbsp;·&nbsp;
